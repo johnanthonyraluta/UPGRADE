@@ -1,0 +1,3 @@
+term le 0
+show pce ipv4 peer 10.205.134.68
+show pce ipv4 topology 10.205.134.68

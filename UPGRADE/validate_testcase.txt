@@ -1,0 +1,9 @@
+term le 0
+show version
+show install comm summ
+admin show install commit summ
+show alarms b s a
+show run segment-routing traffic-eng pcc
+show segment-routing traffic-eng pcc ipv4 peer detail
+show platform
+show hw-module fpd

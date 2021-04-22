@@ -1,0 +1,1792 @@
+﻿RP/0/RP0/CPU0:CMN05702CICN001#show run
+Fri Mar 19 15:49:59.483 PHT
+Building configuration...
+!! IOS XR Configuration 7.2.1
+!! Last configuration change at Fri Mar 19 15:39:54 2021 by Pldtadmin
+!
+hostname CMN05702CICN001
+taskgroup PLDT_MONITORING
+ task read fr
+ task read acl
+ task read bgp
+ task read cef
+ task read ppp
+ task read qos
+ task read rib
+ task read dwdm
+ task read ipv4
+ task read ipv6
+ task read isis
+ task read ospf
+ task read vlan
+ task read l2vpn
+ task read static
+ task read drivers
+ task read logging
+ task read mpls-te
+ task read network
+ task read mpls-ldp
+ task read interface
+ task read multicast
+ task read sonet-sdh
+ task read ext-access
+ task read ip-services
+ task read route-policy
+ task read basic-services
+ task read ethernet-services
+ task write bundle
+ task write interface
+ task write basic-services
+ task execute interface
+ task execute basic-services
+ task execute ethernet-services
+!
+taskgroup PLDT_PROVISIONING
+ task read acl
+ task read bfd
+ task read bgp
+ task read cdp
+ task read eem
+ task read qos
+ task read rib
+ task read hsrp
+ task read ipv4
+ task read ipv6
+ task read lpts
+ task read ospf
+ task read vlan
+ task read vrrp
+ task read l2vpn
+ task read bundle
+ task read crypto
+ task read static
+ task read system
+ task read logging
+ task read monitor
+ task read mpls-te
+ task read network
+ task read mpls-ldp
+ task read interface
+ task read inventory
+ task read multicast
+ task read route-map
+ task read transport
+ task read ext-access
+ task read config-mgmt
+ task read ip-services
+ task read mpls-static
+ task read route-policy
+ task read basic-services
+ task read config-services
+ task read ethernet-services
+ task write acl
+ task write bfd
+ task write bgp
+ task write cdp
+ task write eem
+ task write qos
+ task write hsrp
+ task write ipv4
+ task write ipv6
+ task write ospf
+ task write vlan
+ task write vrrp
+ task write l2vpn
+ task write bundle
+ task write crypto
+ task write static
+ task write system
+ task write monitor
+ task write mpls-te
+ task write network
+ task write mpls-ldp
+ task write interface
+ task write inventory
+ task write multicast
+ task write route-map
+ task write transport
+ task write ext-access
+ task write config-mgmt
+ task write ip-services
+ task write mpls-static
+ task write route-policy
+ task write basic-services
+ task write config-services
+ task write ethernet-services
+ task execute basic-services
+ task execute ethernet-services
+!
+taskgroup PLDT_MONITORING_CONFIGURATION
+ task read fr
+ task read acl
+ task read bgp
+ task read cdp
+ task read cef
+ task read ppp
+ task read qos
+ task read rib
+ task read diag
+ task read dwdm
+ task read hsrp
+ task read ipv4
+ task read ipv6
+ task read isis
+ task read ospf
+ task read vlan
+ task read vrrp
+ task read admin
+ task read l2vpn
+ task read bundle
+ task read static
+ task read sysmgr
+ task read system
+ task read drivers
+ task read logging
+ task read mpls-te
+ task read network
+ task read mpls-ldp
+ task read interface
+ task read inventory
+ task read multicast
+ task read sonet-sdh
+ task read ext-access
+ task read ip-services
+ task read mpls-static
+ task read route-policy
+ task read basic-services
+ task read ethernet-services
+ task write bundle
+ task write interface
+ task write inventory
+ task write basic-services
+ task write ethernet-services
+ task execute bundle
+ task execute interface
+ task execute inventory
+ task execute ext-access
+ task execute basic-services
+ task execute ethernet-services
+!
+usergroup PLDT_MONITORING
+ taskgroup PLDT_MONITORING
+!
+usergroup PLDT_PROVISIONING
+ taskgroup PLDT_PROVISIONING
+!
+usergroup PLDT_MONITORING_CONFIGURATION
+ taskgroup PLDT_MONITORING_CONFIGURATION
+!
+clock timezone PHT Asia/Manila
+banner exec ^
+**************************************************************
+*                                                            *
+*         This node is the property of PLDT/SMART.           *
+*         Changes to the hardware or software of             *
+*         this node may only be performed by                 *
+*         selected PLDT/SMART employees and/or contractors.  *
+*                                                            *
+**************************************************************
+^
+banner login X
+**************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*  This node is the property of PLDT/SMART.  Changes to the  *
+*  hardware or software of this node may only be performed   *
+*  by authorized PLDT/SMART employees and/or contractors.    *
+**************************************************************
+X
+logging ipv4 dscp cs6
+logging trap informational
+logging console disable
+logging monitor debugging
+logging buffered 2097152
+logging buffered informational
+logging facility local7
+logging 10.174.19.3 vrf CIPR20000_TNTMGMT_H00 severity info
+logging 10.123.49.34 vrf CIPR20000_TNTMGMT_H00 severity info port default
+logging 10.230.198.5 vrf CIPR20000_TNTMGMT_H00 severity info
+logging 10.230.211.3 vrf CIPR20000_TNTMGMT_H00 severity info
+logging source-interface Loopback1 vrf CIPR20000_TNTMGMT_H00
+logging hostnameprefix CMN05702CICN001
+service timestamps log datetime localtime msec show-timezone year
+service timestamps debug datetime localtime msec show-timezone year
+domain vrf CIPR20000_TNTMGMT_H00 name tnt.pldt.com.ph
+domain vrf CIPR20000_TNTMGMT_H00 list tnt.pldt.com.ph
+domain vrf CIPR20000_TNTMGMT_H00 name-server 10.230.192.201
+domain vrf CIPR20000_TNTMGMT_H00 name-server 10.174.0.201
+domain vrf CIPR20000_TNTMGMT_H00 lookup source-interface Loopback1
+tacacs source-interface Loopback1 vrf CIPR20000_TNTMGMT_H00
+tacacs-server ipv4 dscp cs6
+username admin
+ group root-lr
+ group cisco-support
+ secret 5 $1$hXS1$GMc8EdGDufJ380fKqoQpu0
+!
+username tsc
+ group root-lr
+ secret 5 $1$SXT3$o/tr/hCzQTq7dZY9UAlnt1
+!
+username icno
+ group root-lr
+ secret 5 $1$5cmF$XEGFh2letq4S3kfb5awyW0
+!
+aaa accounting exec ISE_TACACS start-stop group Cisco_ISE_Servers
+aaa accounting commands ISE_TACACS start-stop group Cisco_ISE_Servers
+aaa group server tacacs+ Cisco_ISE_Servers
+ vrf CIPR20000_TNTMGMT_H00
+ server-private 10.230.192.131 port 49
+  key 7 112A1016141D2B5D5679
+ !
+ server-private 10.174.0.131 port 49
+  key 7 072C285F4D0639544541
+ !
+!
+aaa authorization exec ISE_TACACS group Cisco_ISE_Servers local
+aaa authorization commands ISE_TACACS group Cisco_ISE_Servers none
+aaa authentication login ISE_TACACS group Cisco_ISE_Servers local
+aaa authentication login Auth-console local
+aaa accounting update newinfo
+cdp
+vrf CIPR20000_TNTMGMT_H00
+ address-family ipv4 unicast
+  import route-target
+   1:20000
+  !
+  export route-target
+   1:20000
+  !
+ !
+ address-family ipv6 unicast
+  import route-target
+   1:20000
+  !
+  export route-target
+   1:20000
+  !
+ !
+!
+tcp path-mtu-discovery
+line console
+ login authentication Auth-console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-limit 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-limit 0
+ session-timeout 0
+!
+line template Cisco-ISE
+ accounting exec ISE_TACACS
+ authorization exec ISE_TACACS
+ authorization commands ISE_TACACS
+ login authentication ISE_TACACS
+ exec-timeout 180 0
+ session-limit 0
+ session-timeout 0
+ transport input ssh
+ ! No outbound ssh connections allowed
+ transport output none
+!
+vty-pool default 0 99 line-template Cisco-ISE
+http client vrf CIPR20000_TNTMGMT_H00
+http client source-interface ipv4 Loopback1
+arp redundancy
+!
+snmp-server ifmib ifalias long
+snmp-server ifindex persist
+snmp-server ifmib stats cache
+snmp-server engineID local 80:00:00:09:01:0a:cd:84:42
+snmp-server vrf CIPR20000_TNTMGMT_H00
+ host 10.174.19.3 traps version 3 noauth priv
+ host 10.230.211.3 traps version 3 noauth priv
+!
+snmp-server ipv4 dscp cs6
+snmp-server user snmp_admin snmpv3_def v3 auth sha encrypted 105A390E0704462E4D493978253D273D priv aes 128 encrypted 03106B1C041C75690F440A560700021A SystemOwner
+snmp-server view view_def 1.3.6.1 included
+snmp-server view view_def 1.0.8802.1.1.2 included
+snmp-server group snmpv3_def v3 priv notify view_def read view_def write view_def
+snmp-server traps bfd
+snmp-server traps ntp
+snmp-server traps snmp linkup
+snmp-server traps snmp linkdown
+snmp-server traps snmp coldstart
+snmp-server traps snmp warmstart
+snmp-server traps snmp authentication
+snmp-server traps flash removal
+snmp-server traps flash insertion
+snmp-server traps config
+snmp-server traps entity
+snmp-server traps system
+snmp-server traps entity-state operstatus
+snmp-server traps entity-state switchover
+snmp-server traps entity-redundancy all
+snmp-server traps entity-redundancy status
+snmp-server traps entity-redundancy switchover
+snmp-server chassis-id FOX2307PBLD
+snmp-server contact PLDT CARMONA
+snmp-server location PLDT CARMONA
+snmp-server trap-source Loopback1
+dhcp ipv4
+!
+ntp
+ ipv4 dscp cs6
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.1
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.2
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.34
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.35
+ access-group ipv4 serve NTP-CLIENT
+ source vrf CIPR20000_TNTMGMT_H00 Loopback1
+ update-calendar
+!
+key chain infra-isis
+ key 1
+  accept-lifetime 01:00:00 november 30 2012 infinite
+  key-string password 107E0C3501232D5C0253156A23180C3E710A
+  send-lifetime 01:00:00 november 30 2012 infinite
+  cryptographic-algorithm HMAC-MD5
+ !
+ accept-tolerance infinite
+!
+call-home
+ vrf CIPR20000_TNTMGMT_H00
+ service active
+ contact smart-licensing
+ source-interface Loopback1
+ profile tnt-sat
+  active
+  destination address http https://mktg3610civv046.tnt.pldt.com.ph/Transportgateway/services/DeviceRequestHandler
+  reporting smart-call-home-data
+  reporting smart-licensing-data
+ !
+!
+control-plane
+ management-plane
+  inband
+   interface all
+    allow SSH peer
+     address ipv4 10.174.0.204
+     address ipv4 10.174.6.11
+     address ipv4 10.174.17.3
+     address ipv4 10.174.18.2
+     address ipv4 10.174.19.3
+     address ipv4 10.230.192.204
+     address ipv4 10.230.192.211
+     address ipv4 10.230.192.217
+     address ipv4 10.230.198.5
+     address ipv4 10.230.198.11
+     address ipv4 10.230.209.4
+     address ipv4 10.230.210.2
+     address ipv4 10.230.211.3
+    !
+    allow SNMP peer
+     address ipv4 10.174.0.204
+     address ipv4 10.174.18.2
+     address ipv4 10.174.19.3
+     address ipv4 10.230.192.204
+     address ipv4 10.230.192.217
+     address ipv4 10.230.198.5
+     address ipv4 10.230.210.2
+     address ipv4 10.230.211.3
+    !
+   !
+  !
+ !
+!
+hw-module profile qos hqos-enable
+netconf-yang agent
+ ssh
+!
+ipv4 access-list ssh_acl
+ 10 permit ipv4 host 10.230.209.4 any
+ 20 permit ipv4 host 10.174.17.3 any
+ 30 permit ipv4 host 10.230.210.2 any
+ 40 permit ipv4 host 10.174.18.2 any
+ 50 permit ipv4 host 10.174.19.3 any
+ 60 permit ipv4 host 10.230.211.3 any
+ 70 permit ipv4 host 10.230.192.204 any
+ 80 permit ipv4 host 10.174.0.204 any
+ 90 permit ipv4 host 10.230.192.211 any
+ 110 permit ipv4 host 10.230.198.5 any
+ 120 permit ipv4 host 10.230.192.217 any
+ 130 permit ipv4 host 10.230.198.11 any
+ 140 permit ipv4 host 10.174.6.11 any
+!
+ipv4 access-list NTP-CLIENT
+ !permit all
+ 10 permit ipv4 any any
+!
+class-map match-any Egress-TNT-PTP-NC
+ match traffic-class 7 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-PTP-NC
+ match mpls experimental topmost 6 7 
+ match dscp cs6 cs7 
+ end-class-map
+! 
+class-map match-any Egress-TNT-Real-Time
+ match traffic-class 5 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP1-Class
+ match traffic-class 1 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP2-Class
+ match traffic-class 2 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP3-Class
+ match traffic-class 3 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP4-Class
+ match traffic-class 4 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-Real-Time
+ match mpls experimental topmost 5 
+ match dscp ef cs5 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP1-Class
+ match mpls experimental topmost 1 
+ match dscp af11 af12 af13 cs1 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP2-Class
+ match mpls experimental topmost 2 
+ match dscp af21 af22 af23 cs2 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP3-Class
+ match mpls experimental topmost 3 
+ match dscp af31 af32 af33 cs3 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP4-Class
+ match mpls experimental topmost 4 
+ match dscp af41 af42 af43 cs4 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_EF
+ match dscp ef 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF1
+ match dscp af11 af12 af13 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF2
+ match dscp af21 af22 af23 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF3
+ match dscp af31 af32 af33 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF4
+ match dscp af41 af42 af43 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS1
+ match cos 1 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS2
+ match cos 2 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS3
+ match cos 3 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS4
+ match cos 4 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS5
+ match cos 5 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class1
+ match traffic-class 1 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class2
+ match traffic-class 2 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class3
+ match traffic-class 3 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class4
+ match traffic-class 4 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class5
+ match traffic-class 5 
+ end-class-map
+! 
+policy-map TNT-CORE_EGRESS-v1
+ class Egress-TNT-PTP-NC
+  queue-limit 5 ms 
+  priority level 1 
+ ! 
+ class Egress-TNT-Real-Time
+  queue-limit 5 ms 
+  priority level 2 
+ ! 
+ class Egress-TNT-EXP4-Class
+  bandwidth remaining percent 30 
+  queue-limit 100 ms 
+ ! 
+ class Egress-TNT-EXP3-Class
+  bandwidth remaining percent 25 
+  queue-limit 100 ms 
+ ! 
+ class Egress-TNT-EXP2-Class
+  bandwidth remaining percent 25 
+  queue-limit 100 ms 
+ ! 
+ class Egress-TNT-EXP1-Class
+  bandwidth remaining percent 15 
+  queue-limit 100 ms 
+ ! 
+ class class-default
+  random-detect 50 ms 100 ms 
+  bandwidth remaining percent 5 
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-CP-IN
+ class class-default
+  set mpls experimental imposition 5
+  set traffic-class 5
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-OM-IN
+ class class-default
+  set mpls experimental imposition 3
+  set traffic-class 3
+ ! 
+ end-policy-map
+! 
+policy-map TNT-CORE_INGRESS-v1
+ class Ingress-TNT-PTP-NC
+  set traffic-class 7
+ ! 
+ class Ingress-TNT-Real-Time
+  set traffic-class 5
+ ! 
+ class Ingress-TNT-EXP4-Class
+  set traffic-class 4
+ ! 
+ class Ingress-TNT-EXP3-Class
+  set traffic-class 3
+ ! 
+ class Ingress-TNT-EXP2-Class
+  set traffic-class 2
+ ! 
+ class Ingress-TNT-EXP1-Class
+  set traffic-class 1
+ ! 
+ class class-default
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-CP-OUT
+ class Egress-PE_CE-Traffic_Class5
+  priority level 2 
+ ! 
+ class class-default
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-HSI-IN
+ class class-default
+  set mpls experimental imposition 0
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-IPTV-IN
+ class class-default
+  set mpls experimental imposition 4
+  set traffic-class 4
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-VOICE-IN
+ class Ingress-PE_CE-Traffic_EF
+  set mpls experimental imposition 5
+  set traffic-class 5
+ ! 
+ class class-default
+  set mpls experimental imposition 0
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-VOICE-OUT
+ class Egress-PE_CE-Traffic_Class5
+  priority level 2 
+ ! 
+ class class-default
+ ! 
+ end-policy-map
+! 
+interface Bundle-Ether10
+ description **Connected to CMN05702CICN002 Bundle-Ether10**
+ bfd mode ietf
+ bfd address-family ipv4 timers start 60
+ bfd address-family ipv4 timers nbr-unconfig 3600
+ bfd address-family ipv4 multiplier 3
+ bfd address-family ipv4 destination 10.205.227.166
+ bfd address-family ipv4 fast-detect
+ bfd address-family ipv4 minimum-interval 15
+ mtu 9216
+ service-policy input TNT-CORE_INGRESS-v1
+ service-policy output TNT-CORE_EGRESS-v1
+ ipv4 address 10.205.227.165 255.255.255.252
+ ipv6 address 2405:b800:1:2000::1d2/127
+ load-interval 30
+ dampening
+!
+interface Bundle-Ether101
+ description **Connected to CLAS3548CIBE001 Bundle-Ether101**
+ bfd mode ietf
+ bfd address-family ipv4 timers start 60
+ bfd address-family ipv4 timers nbr-unconfig 3600
+ bfd address-family ipv4 multiplier 3
+ bfd address-family ipv4 destination 10.205.226.18
+ bfd address-family ipv4 fast-detect
+ bfd address-family ipv4 minimum-interval 15
+ mtu 9216
+ service-policy input TNT-CORE_INGRESS-v1
+ service-policy output TNT-CORE_EGRESS-v1
+ ipv4 address 10.205.226.17 255.255.255.252
+ ipv6 address 2405:b800:1:2000::108/127
+ load-interval 30
+ dampening
+!
+interface Bundle-Ether102
+ description **Connected to CLAS3548CIBE002 Bundle-Ether101**
+ bfd mode ietf
+ bfd address-family ipv4 timers start 60
+ bfd address-family ipv4 timers nbr-unconfig 3600
+ bfd address-family ipv4 multiplier 3
+ bfd address-family ipv4 destination 10.205.226.22
+ bfd address-family ipv4 fast-detect
+ bfd address-family ipv4 minimum-interval 15
+ mtu 9216
+ service-policy input TNT-CORE_INGRESS-v1
+ service-policy output TNT-CORE_EGRESS-v1
+ ipv4 address 10.205.226.21 255.255.255.252
+ ipv6 address 2405:b800:1:2000::10a/127
+ shutdown
+ load-interval 30
+ dampening
+!
+interface Loopback0
+ description default loopback
+ ipv4 address 10.205.132.66 255.255.255.255
+ ipv6 address 2405:b800::2042/128
+!
+interface Loopback1
+ description network management loopback
+ vrf CIPR20000_TNTMGMT_H00
+ ipv4 address 10.205.140.66 255.255.255.255
+ ipv6 address 2405:b800::a043/128
+!
+interface Loopback100
+ description anycast loopback
+ ipv4 address 10.205.184.160 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ shutdown
+!
+interface MgmtEth0/RP1/CPU0/0
+ shutdown
+!
+interface TenGigE0/3/0/0
+ shutdown
+!
+interface TenGigE0/3/0/1
+ shutdown
+!
+interface TenGigE0/3/0/2
+ shutdown
+!
+interface TenGigE0/3/0/3
+ shutdown
+!
+interface TenGigE0/3/0/4
+ shutdown
+!
+interface TenGigE0/3/0/5
+ shutdown
+!
+interface TenGigE0/3/0/6
+ shutdown
+!
+interface TenGigE0/3/0/7
+ shutdown
+!
+interface TenGigE0/3/0/8
+ shutdown
+!
+interface TenGigE0/3/0/9
+ shutdown
+!
+interface TenGigE0/3/0/10
+ shutdown
+!
+interface TenGigE0/3/0/11
+ shutdown
+!
+interface TenGigE0/3/1/0
+ shutdown
+!
+interface TenGigE0/3/1/1
+ shutdown
+!
+interface TenGigE0/3/1/2
+ shutdown
+!
+interface TenGigE0/3/1/3
+ shutdown
+!
+interface TenGigE0/3/1/4
+ shutdown
+!
+interface TenGigE0/3/1/5
+ shutdown
+!
+interface TenGigE0/3/1/6
+ shutdown
+!
+interface TenGigE0/3/1/7
+ shutdown
+!
+interface TenGigE0/3/1/8
+ shutdown
+!
+interface TenGigE0/3/1/9
+ shutdown
+!
+interface TenGigE0/3/1/10
+ shutdown
+!
+interface TenGigE0/3/1/11
+ shutdown
+!
+interface HundredGigE0/2/0/0
+ description **Connected to CLAS3548CIBE001 HundredGigE0/0/0/28**
+ bundle id 101 mode active
+ cdp
+ carrier-delay up 2000 down 0
+ load-interval 30
+!
+interface HundredGigE0/2/0/1
+ shutdown
+!
+interface HundredGigE0/2/0/2
+ shutdown
+!
+interface HundredGigE0/2/0/3
+ shutdown
+!
+interface HundredGigE0/2/0/4
+ shutdown
+!
+interface HundredGigE0/2/0/5
+ shutdown
+!
+interface HundredGigE0/2/0/6
+ shutdown
+!
+interface HundredGigE0/2/0/7
+ shutdown
+!
+interface HundredGigE0/2/0/8
+ shutdown
+!
+interface HundredGigE0/2/0/9
+ shutdown
+!
+interface HundredGigE0/2/0/10
+ shutdown
+!
+interface HundredGigE0/2/0/11
+ shutdown
+!
+interface HundredGigE0/2/0/12
+ shutdown
+!
+interface HundredGigE0/2/0/13
+ shutdown
+!
+interface HundredGigE0/2/0/14
+ shutdown
+!
+interface HundredGigE0/2/0/15
+ shutdown
+!
+interface HundredGigE0/2/0/16
+ shutdown
+!
+interface HundredGigE0/2/0/17
+ shutdown
+!
+interface HundredGigE0/2/0/18
+ shutdown
+!
+interface HundredGigE0/2/0/19
+ shutdown
+!
+interface HundredGigE0/2/0/20
+ shutdown
+!
+interface HundredGigE0/2/0/21
+ shutdown
+!
+interface HundredGigE0/2/0/22
+ shutdown
+!
+interface HundredGigE0/2/0/23
+ shutdown
+!
+interface HundredGigE0/2/0/24
+ shutdown
+!
+interface HundredGigE0/2/0/25
+ shutdown
+!
+interface HundredGigE0/2/0/26
+ shutdown
+!
+interface HundredGigE0/2/0/27
+ shutdown
+!
+interface HundredGigE0/2/0/28
+ shutdown
+!
+interface HundredGigE0/2/0/29
+ shutdown
+!
+interface HundredGigE0/2/0/30
+ shutdown
+!
+interface HundredGigE0/2/0/31
+ shutdown
+!
+interface HundredGigE0/2/0/32
+ shutdown
+!
+interface HundredGigE0/2/0/33
+ shutdown
+!
+interface HundredGigE0/2/0/34
+ shutdown
+!
+interface HundredGigE0/2/0/35
+ description **Connected to CMN05702CICN001 HundredGigE0/2/0/35**
+ bundle id 10 mode active
+ cdp
+ carrier-delay up 2000 down 0
+ load-interval 30
+!
+interface FortyGigE0/3/0/12
+ shutdown
+!
+interface FortyGigE0/3/0/13
+ shutdown
+!
+interface HundredGigE0/3/2/0
+ description **Connected to CLAS3548CIBE002 HundredGigE0/0/0/29**
+ bundle id 102 mode active
+ cdp
+ carrier-delay up 2000 down 0
+ load-interval 30
+!
+interface HundredGigE0/3/2/1
+ shutdown
+!
+interface HundredGigE0/3/2/2
+ shutdown
+!
+interface HundredGigE0/3/2/3
+ shutdown
+!
+interface PTP0/RP0/CPU0/0
+ shutdown
+!
+interface PTP0/RP1/CPU0/0
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/0
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/1
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/2
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/3
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/4
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/5
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/6
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/7
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/8
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/9
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/10
+ shutdown
+!
+interface preconfigure TenGigE0/2/0/11
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/0
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/1
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/2
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/3
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/4
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/5
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/6
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/7
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/8
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/9
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/10
+ shutdown
+!
+interface preconfigure TenGigE0/2/1/11
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/0
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/0
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/0/0
+!
+interface preconfigure HundredGigE0/0/0/0/1
+!
+interface preconfigure HundredGigE0/0/0/0/2
+!
+interface preconfigure HundredGigE0/0/0/0/3
+!
+interface preconfigure HundredGigE0/0/0/0/4
+!
+interface preconfigure HundredGigE0/0/0/0/5
+!
+interface preconfigure HundredGigE0/0/0/0/6
+!
+interface preconfigure HundredGigE0/0/0/0/7
+!
+interface preconfigure HundredGigE0/0/0/0/8
+!
+interface preconfigure HundredGigE0/0/0/0/9
+!
+interface preconfigure HundredGigE0/0/0/0/10
+!
+interface preconfigure HundredGigE0/0/0/0/11
+!
+interface preconfigure HundredGigE0/0/0/0/12
+!
+interface preconfigure HundredGigE0/0/0/0/13
+!
+interface preconfigure HundredGigE0/0/0/0/14
+!
+interface preconfigure HundredGigE0/0/0/0/15
+!
+interface preconfigure HundredGigE0/0/0/0/16
+!
+interface preconfigure HundredGigE0/0/0/0/17
+!
+interface preconfigure HundredGigE0/0/0/0/18
+!
+interface preconfigure HundredGigE0/0/0/0/19
+!
+interface preconfigure HundredGigE0/0/0/0/20
+!
+interface preconfigure HundredGigE0/0/0/0/21
+!
+interface preconfigure HundredGigE0/0/0/0/22
+!
+interface preconfigure HundredGigE0/0/0/0/23
+!
+interface preconfigure HundredGigE0/0/0/0/24
+!
+interface preconfigure HundredGigE0/0/0/0/25
+!
+interface preconfigure HundredGigE0/0/0/0/26
+!
+interface preconfigure HundredGigE0/0/0/0/27
+!
+interface preconfigure HundredGigE0/0/0/0/28
+!
+interface preconfigure HundredGigE0/0/0/0/29
+!
+interface preconfigure HundredGigE0/0/0/0/30
+!
+interface preconfigure HundredGigE0/0/0/0/31
+!
+interface preconfigure HundredGigE0/0/0/0/32
+!
+interface preconfigure HundredGigE0/0/0/0/33
+!
+interface preconfigure HundredGigE0/0/0/0/34
+!
+interface preconfigure HundredGigE0/0/0/0/35
+!
+interface preconfigure FortyGigE0/0/0/1
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/1
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/2
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/3
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/3
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/4
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/4
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/5
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/5
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/6
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/6
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/7
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/7
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/8
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/8
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/9
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/9
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/10
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/10
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/11
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/11
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/12
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/12
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/13
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/13
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/14
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/14
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/15
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/15
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/16
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/16
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/17
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/17
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/18
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/18
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/19
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/19
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/20
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/20
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/21
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/21
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/22
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/22
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/23
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/23
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/24
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/24
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/25
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/25
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/26
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/26
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/27
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/27
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/28
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/28
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/29
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/29
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/30
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/30
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/31
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/31
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/32
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/32
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/33
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/33
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/34
+ shutdown
+!
+interface preconfigure HundredGigE0/0/0/34
+ shutdown
+!
+interface preconfigure FortyGigE0/0/0/35
+ shutdown
+!
+interface preconfigure HundredGigE0/0/1/0/2
+!
+interface preconfigure FortyGigE0/1/0/0
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/0
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/1
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/1
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/2
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/3
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/3
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/4
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/4
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/5
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/5
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/6
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/6
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/7
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/7
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/8
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/8
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/9
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/9
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/10
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/10
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/11
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/11
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/12
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/12
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/13
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/13
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/14
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/14
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/15
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/15
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/16
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/16
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/17
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/17
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/18
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/18
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/19
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/19
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/20
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/20
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/21
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/21
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/22
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/22
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/23
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/23
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/24
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/24
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/25
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/25
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/26
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/26
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/27
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/27
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/28
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/28
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/29
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/29
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/30
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/30
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/31
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/31
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/32
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/32
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/33
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/33
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/34
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/34
+ shutdown
+!
+interface preconfigure FortyGigE0/1/0/35
+ shutdown
+!
+interface preconfigure HundredGigE0/1/0/35
+ shutdown
+!
+interface preconfigure FortyGigE0/2/0/12
+ shutdown
+!
+interface preconfigure FortyGigE0/2/0/13
+ shutdown
+!
+!
+route-policy pass-all
+  pass
+end-policy
+!
+route-policy LOOPBACK-INTO-BGP-LU($SID)
+  set label-index $SID
+  set aigp-metric igp-cost
+end-policy
+!
+route-policy RP_BGP_IPv4_PIC_EDGE
+  set path-selection backup 1 install multipath-protect advertise
+end-policy
+!
+route-policy RP_BGP_VPNv4v6_PIC_EDGE
+  set path-selection backup 1 install
+end-policy
+!
+router isis AGG1701
+ set-overload-bit
+ is-type level-2-only
+ net 49.1701.0102.0513.2066.00
+ instance-id 1701
+ nsr
+ nsf cisco
+ log adjacency changes
+ lsp-gen-interval maximum-wait 5000 initial-wait 1 secondary-wait 50
+ lsp-refresh-interval 65000
+ max-lsp-lifetime 65535
+ lsp-password keychain infra-isis level 2
+ address-family ipv4 unicast
+  metric-style wide
+  fast-reroute per-prefix priority-limit medium
+  microloop avoidance segment-routing
+  microloop avoidance rib-update-delay 3000
+  mpls traffic-eng level-2-only
+  mpls traffic-eng router-id 10.205.132.66
+  mpls traffic-eng multicast-intact
+  spf-interval maximum-wait 5000 initial-wait 50 secondary-wait 200
+  attached-bit send never-set
+  segment-routing mpls sr-prefer
+ !
+ address-family ipv6 unicast
+  metric-style wide
+  spf-interval maximum-wait 5000 initial-wait 50 secondary-wait 200
+ !
+ interface Bundle-Ether10
+  circuit-type level-2-only
+  point-to-point
+  hello-password keychain infra-isis
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+  address-family ipv6 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+ !
+ interface Bundle-Ether101
+  circuit-type level-2-only
+  point-to-point
+  hello-password keychain infra-isis
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+  address-family ipv6 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+ !
+ interface Bundle-Ether102
+  circuit-type level-2-only
+  point-to-point
+  hello-password keychain infra-isis
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+  address-family ipv6 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+   tag 1000
+   prefix-sid absolute 23044 explicit-null
+   prefix-sid strict-spf absolute 23045 explicit-null
+  !
+  address-family ipv6 unicast
+   tag 1000
+  !
+ !
+ interface Loopback100
+  passive
+  address-family ipv4 unicast
+   tag 1000
+   prefix-sid absolute 99011 explicit-null n-flag-clear
+  !
+  address-family ipv6 unicast
+   tag 1000
+  !
+ !
+!
+snmp-server traps isis all
+router ospf PE-CE-TNT
+!
+snmp-server traps bgp cbgp2
+snmp-server traps bgp
+router bgp 45608
+ nsr
+ mvpn
+ bgp router-id 10.205.132.66
+ bgp graceful-restart graceful-reset
+ update out logging
+ bgp graceful-restart
+ bgp log neighbor changes detail
+ ibgp policy out enforce-modifications
+ address-family vpnv4 unicast
+  additional-paths selection route-policy RP_BGP_VPNv4v6_PIC_EDGE
+  nexthop trigger-delay critical 1000
+ !
+ address-family vpnv6 unicast
+  additional-paths selection route-policy RP_BGP_VPNv4v6_PIC_EDGE
+  nexthop trigger-delay critical 1000
+ !
+ address-family l2vpn evpn
+  nexthop trigger-delay critical 0
+ !
+ neighbor-group S-RR
+  remote-as 45608
+  password encrypted 046B582A0B157319074E3A41153B330F796A
+  description S-RR peer  
+  update-source Loopback0
+  address-family vpnv4 unicast
+  !
+  address-family vpnv6 unicast
+  !
+  address-family l2vpn evpn
+  !
+ !
+ neighbor 10.205.130.21
+  use neighbor-group S-RR
+ !
+ neighbor 10.205.130.98
+  use neighbor-group S-RR
+ !
+ vrf CIPR20000_TNTMGMT_H00
+  rd 10.205.132.66:20000
+  address-family ipv4 unicast
+   label mode per-ce
+   redistribute connected
+  !
+  address-family ipv6 unicast
+   label mode per-ce
+   redistribute connected
+  !
+ !
+!
+evpn
+ ethernet-segment
+  type 1 auto-generation-disable
+ !
+ group 1
+  core interface Bundle-Ether10
+  core interface Bundle-Ether101
+  core interface Bundle-Ether102
+ !
+ logging
+  df-election
+ !
+!
+snmp-server traps vrrp events
+snmp-server traps vpls all
+snmp-server traps l2vpn all
+l2vpn
+ load-balancing flow src-dst-ip
+ logging
+  bridge-domain
+  pseudowire
+  nsr
+  vfi
+ !
+!
+router vrrp
+!
+mpls oam
+!
+snmp-server traps mpls ldp up
+snmp-server traps mpls ldp down
+snmp-server traps mpls ldp threshold
+snmp-server traps mpls l3vpn all
+snmp-server traps mpls l3vpn vrf-up
+snmp-server traps mpls l3vpn vrf-down
+snmp-server traps mpls l3vpn max-threshold-cleared
+snmp-server traps mpls l3vpn max-threshold-exceeded
+snmp-server traps mpls l3vpn mid-threshold-exceeded
+snmp-server traps mpls l3vpn max-threshold-reissue-notif-time 1
+mpls traffic-eng
+!
+mpls ldp
+ capabilities sac mldp-only
+ mldp
+  address-family ipv4
+   make-before-break delay 30
+  !
+ !
+ router-id 10.205.132.66
+ interface Bundle-Ether10
+ !
+ interface Bundle-Ether101
+ !
+ interface Bundle-Ether102
+ !
+!
+snmp-server traps pim invalid-message-received
+snmp-server traps pim interface-state-change
+multicast-routing
+ address-family ipv4
+  interface Loopback0
+   enable
+  !
+  mdt source Loopback0
+ !
+!
+router igmp
+!
+segment-routing
+ global-block 16000 225999
+ traffic-eng
+  logging
+   policy status
+  !
+  pcc
+   source-address ipv4 10.205.132.66
+   pce address ipv4 10.205.130.19
+    precedence 5
+   !
+   pce address ipv4 10.205.130.96
+    precedence 10
+   !
+   report-all
+  !
+ !
+!
+xml agent tty
+!
+snmp-server traps sensor
+snmp-server traps fru-ctrl
+netconf agent tty
+!
+router pim
+!
+mpls ip-ttl-propagate disable
+crypto ca trustpoint Trustpoo
+ crl optional
+!
+ssh client dscp 48
+ssh server dscp 48
+ssh server logging
+ssh timeout 90
+ssh server rate-limit 600
+ssh server session-limit 100
+ssh server v2
+ssh server vrf default
+ssh server vrf CIPR20000_TNTMGMT_H00 ipv4 access-list ssh_acl
+license smart flexible-consumption enable
+telnet vrf default ipv4 server max-servers 100
+ipsla
+ responder
+ !
+!
+end
+

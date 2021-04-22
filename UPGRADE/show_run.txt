@@ -1,0 +1,3 @@
+term le 0
+show run
+show clock

@@ -1,0 +1,8 @@
+show run | i hostname
+ping 10.205.134.68 sou lo0 re 500 df-bit
+ping vrf CIPR20000_TNTMGMT_H00 10.205.142.68 sou lo1 re 500 df-bit
+trace 10.205.134.68 sou lo0
+trace vrf CIPR20000_TNTMGMT_H00 10.205.142.68 sou lo1
+show bgp vpnv4 uni vrf CIPR20000_TNTMGMT_H00 10.205.142.68
+show route vrf CIPR20000_TNTMGMT_H00 10.205.142.68
+show route 10.205.134.68

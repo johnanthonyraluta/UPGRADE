@@ -1,0 +1,126 @@
+show run | i hostname
+
+=========================
+Fri Apr 16 08:07:33.281 PHT
+Building configuration...
+hostname CKL3992CIVV029
+logging hostnameprefix CKL3992CIVV029
+ping 10.205.134.81 sou lo0 re 500 df-bit
+
+=========================
+Fri Apr 16 08:07:33.666 PHT
+Type escape sequence to abort.
+Sending 500, 100-byte ICMP Echos to 10.205.134.81, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!
+Success rate is 100 percent (500/500), round-trip min/avg/max = 7/11/20 ms
+ping vrf CIPR20000_TNTMGMT_H00 10.205.142.81 sou lo1 re 500 df-bit
+
+=========================
+Fri Apr 16 08:07:39.602 PHT
+Type escape sequence to abort.
+Sending 500, 100-byte ICMP Echos to 10.205.142.81, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!
+Success rate is 100 percent (500/500), round-trip min/avg/max = 5/10/21 ms
+trace 10.205.134.81 sou lo0
+
+=========================
+Fri Apr 16 08:07:45.472 PHT
+
+Type escape sequence to abort.
+Tracing the route to 10.205.134.81
+
+ 1  10.205.197.93 [MPLS: Label 33080 Exp 0] 14 msec 
+    10.205.197.105 9 msec  19 msec 
+ 2  10.205.194.6 [MPLS: Label 33080 Exp 0] 12 msec 
+    10.205.194.10 9 msec 
+    10.205.194.6 18 msec 
+ 3  10.205.192.137 [MPLS: Label 33080 Exp 0] 13 msec 
+    10.205.192.129 7 msec 
+    10.205.192.137 19 msec 
+ 4  10.205.197.193 [MPLS: Label 33080 Exp 0] 12 msec 
+    10.205.197.197 9 msec 
+    10.205.197.193 19 msec 
+ 5  10.205.233.37 12 msec  *  19 msec 
+trace vrf CIPR20000_TNTMGMT_H00 10.205.142.81 sou lo1
+
+=========================
+Fri Apr 16 08:07:48.980 PHT
+
+Type escape sequence to abort.
+Tracing the route to 10.205.142.81
+
+ 1  10.205.197.93 [MPLS: Labels 33080/226004 Exp 0] 14 msec 
+    10.205.197.105 9 msec  7 msec 
+ 2  10.205.194.2 [MPLS: Labels 33080/226004 Exp 0] 16 msec 
+    10.205.194.14 7 msec 
+    10.205.194.6 17 msec 
+ 3  10.205.192.129 [MPLS: Labels 33080/226004 Exp 0] 17 msec 
+    10.205.192.137 13 msec 
+    10.205.192.141 18 msec 
+ 4  10.205.197.205 [MPLS: Labels 33080/226004 Exp 0] 13 msec 
+    10.205.197.193 15 msec 
+    10.205.197.201 15 msec 
+ 5  10.205.142.81 15 msec  *  12 msec 
+show bgp vpnv4 uni vrf CIPR20000_TNTMGMT_H00 10.205.142.81
+
+=========================
+Fri Apr 16 08:07:52.637 PHT
+BGP routing table entry for 10.205.142.81/32, Route Distinguisher: 10.205.130.96:20000
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker            1792314     1792314
+Last Modified: Apr 14 21:41:10.438 for 1d10h
+Paths: (1 available, best #1)
+  Not advertised to any peer
+  Path #1: Received by speaker 0
+  Not advertised to any peer
+  Local
+    10.205.134.81 (metric 110300) from 10.205.130.21 (10.205.134.81)
+      Received Label 226004 
+      Origin incomplete, metric 0, localpref 100, valid, internal, best, group-best, import-candidate, imported
+      Received Path ID 0, Local Path ID 1, version 1792314
+      Extended community: RT:1:20000 
+      Originator: 10.205.134.81, Cluster list: 10.205.130.21
+      Source AFI: VPNv4 Unicast, Source VRF: default, Source Route Distinguisher: 10.205.134.81:20000
+show route vrf CIPR20000_TNTMGMT_H00 10.205.142.81
+
+=========================
+Fri Apr 16 08:07:52.848 PHT
+
+Routing entry for 10.205.142.81/32
+  Known via "bgp 45608", distance 200, metric 0, type internal
+  Installed Apr 14 21:41:10.160 for 1d10h
+  Routing Descriptor Blocks
+    10.205.134.81, from 10.205.130.21
+      Nexthop in Vrf: "default", Table: "default", IPv4 Unicast, Table Id: 0xe0000000
+      Route metric is 0
+  No advertising protos. 
+show route 10.205.134.81
+
+=========================
+Fri Apr 16 08:07:53.004 PHT
+
+Routing entry for 10.205.134.81/32
+  Known via "isis BACKBONE", distance 115, metric 110300, labeled SR
+  Tag 1701, type level-2
+  Installed Apr 15 16:54:06.832 for 15:13:46
+  Routing Descriptor Blocks
+    10.205.197.93, from 10.205.130.66, via GigabitEthernet0/0/0/0, Protected, ECMP-Backup (Local-LFA)
+      Route metric is 110300
+    10.205.197.105, from 10.205.130.66, via GigabitEthernet0/0/0/1, Protected, ECMP-Backup (Local-LFA)
+      Route metric is 110300
+  No advertising protos. 

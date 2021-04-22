@@ -1,0 +1,136 @@
+show run | i hostname
+
+=========================
+Tue Apr 13 16:19:16.869 PHT
+Building configuration...
+hostname LCN04117CIBP001
+logging hostnameprefix LCN04117CIBP001
+ping 10.205.132.64 size 1500 re 500 df-bit source loopback0
+
+=========================
+Tue Apr 13 16:19:17.624 PHT
+Type escape sequence to abort.
+Sending 500, 1500-byte ICMP Echos to 10.205.132.64, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!
+Success rate is 100 percent (500/500), round-trip min/avg/max = 1/3/6 ms
+ping 10.205.132.65 size 1500 re 500 df-bit source loopback0
+
+=========================
+Tue Apr 13 16:19:19.669 PHT
+Type escape sequence to abort.
+Sending 500, 1500-byte ICMP Echos to 10.205.132.65, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!
+Success rate is 100 percent (500/500), round-trip min/avg/max = 1/3/7 ms
+ping vrf CIPR20000_TNTMGMT_H00 10.205.140.64 size 1500 re 500 df-bit source loopback1
+
+=========================
+Tue Apr 13 16:19:21.917 PHT
+Type escape sequence to abort.
+Sending 500, 1500-byte ICMP Echos to 10.205.140.64, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!
+Success rate is 100 percent (500/500), round-trip min/avg/max = 3/3/7 ms
+ping vrf CIPR20000_TNTMGMT_H00 10.205.140.65 size 1500 re 500 df-bit source loopback1
+
+=========================
+Tue Apr 13 16:19:24.442 PHT
+Type escape sequence to abort.
+Sending 500, 1500-byte ICMP Echos to 10.205.140.65, timeout is 2 seconds:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!
+Success rate is 100 percent (500/500), round-trip min/avg/max = 1/3/7 ms
+trace vrf CIPR20000_TNTMGMT_H00 10.205.140.65 source loopback1
+
+=========================
+Tue Apr 13 16:19:26.904 PHT
+
+Type escape sequence to abort.
+Tracing the route to 10.205.140.65
+
+ 1  10.205.198.9 [MPLS: Labels 23042/226002 Exp 0] 3 msec 
+    10.205.198.1 4 msec 
+    10.205.198.9 3 msec 
+ 2  10.205.140.65 4 msec  *  4 msec 
+trace vrf CIPR20000_TNTMGMT_H00 10.205.140.64 source loopback1
+
+=========================
+Tue Apr 13 16:19:30.477 PHT
+
+Type escape sequence to abort.
+Tracing the route to 10.205.140.64
+
+ 1  10.205.198.9 [MPLS: Labels 23040/226004 Exp 0] 4 msec 
+    10.205.198.1 4 msec 
+    10.205.198.9 4 msec 
+ 2  10.205.140.64 4 msec  *  4 msec 
+trace 10.205.138.64 source loopback0
+
+=========================
+Tue Apr 13 16:19:34.067 PHT
+
+Type escape sequence to abort.
+Tracing the route to 10.205.138.64
+
+ 1  10.205.128.64 !N  *  !N 
+trace 10.205.138.65 source loopback0
+
+=========================
+Tue Apr 13 16:19:37.575 PHT
+
+Type escape sequence to abort.
+Tracing the route to 10.205.138.65
+
+ 1   * 
+    10.205.128.64 !N  * 
+show route vrf CIPR20000_TNTMGMT_H00 10.205.140.64
+
+=========================
+Tue Apr 13 16:19:44.082 PHT
+
+Routing entry for 10.205.140.64/32
+  Known via "bgp 45608", distance 200, metric 0, type internal
+  Installed Apr 13 16:09:22.979 for 00:10:21
+  Routing Descriptor Blocks
+    10.205.132.64, from 10.205.130.21
+      Nexthop in Vrf: "default", Table: "default", IPv4 Unicast, Table Id: 0xe0000000
+      Route metric is 0
+  No advertising protos. 
+show route vrf CIPR20000_TNTMGMT_H00 10.205.140.65
+
+=========================
+Tue Apr 13 16:19:44.395 PHT
+
+Routing entry for 10.205.140.65/32
+  Known via "bgp 45608", distance 200, metric 0, type internal
+  Installed Apr 13 16:03:15.946 for 00:16:28
+  Routing Descriptor Blocks
+    10.205.132.65, from 10.205.130.21
+      Nexthop in Vrf: "default", Table: "default", IPv4 Unicast, Table Id: 0xe0000000
+      Route metric is 0
+  No advertising protos. 
