@@ -1,0 +1,1862 @@
+term le 0
+
+=========================
+Mon May  3 11:02:51.536 PHT
+show run
+
+=========================
+Mon May  3 11:02:51.653 PHT
+Building configuration...
+!! IOS XR Configuration 7.2.1
+!! Last configuration change at Mon May  3 10:53:49 2021 by Pldtadmin
+!
+hostname BCN00550CICU001
+taskgroup PLDT_MONITORING
+ task read fr
+ task read acl
+ task read bgp
+ task read cef
+ task read ppp
+ task read qos
+ task read rib
+ task read dwdm
+ task read ipv4
+ task read ipv6
+ task read isis
+ task read ospf
+ task read vlan
+ task read l2vpn
+ task read static
+ task read drivers
+ task read logging
+ task read mpls-te
+ task read network
+ task read mpls-ldp
+ task read interface
+ task read multicast
+ task read sonet-sdh
+ task read ext-access
+ task read ip-services
+ task read route-policy
+ task read basic-services
+ task read ethernet-services
+ task write bundle
+ task write interface
+ task write basic-services
+ task execute interface
+ task execute basic-services
+ task execute ethernet-services
+!
+taskgroup PLDT_PROVISIONING
+ task read acl
+ task read bfd
+ task read bgp
+ task read cdp
+ task read eem
+ task read qos
+ task read rib
+ task read hsrp
+ task read ipv4
+ task read ipv6
+ task read lpts
+ task read ospf
+ task read vlan
+ task read vrrp
+ task read l2vpn
+ task read bundle
+ task read crypto
+ task read static
+ task read system
+ task read logging
+ task read monitor
+ task read mpls-te
+ task read network
+ task read mpls-ldp
+ task read interface
+ task read inventory
+ task read multicast
+ task read route-map
+ task read transport
+ task read ext-access
+ task read config-mgmt
+ task read ip-services
+ task read mpls-static
+ task read route-policy
+ task read basic-services
+ task read config-services
+ task read ethernet-services
+ task write acl
+ task write bfd
+ task write bgp
+ task write cdp
+ task write eem
+ task write qos
+ task write hsrp
+ task write ipv4
+ task write ipv6
+ task write ospf
+ task write vlan
+ task write vrrp
+ task write l2vpn
+ task write bundle
+ task write crypto
+ task write static
+ task write system
+ task write monitor
+ task write mpls-te
+ task write network
+ task write mpls-ldp
+ task write interface
+ task write inventory
+ task write multicast
+ task write route-map
+ task write transport
+ task write ext-access
+ task write config-mgmt
+ task write ip-services
+ task write mpls-static
+ task write route-policy
+ task write basic-services
+ task write config-services
+ task write ethernet-services
+ task execute basic-services
+ task execute ethernet-services
+!
+taskgroup PLDT_MONITORING_CONFIGURATION
+ task read fr
+ task read acl
+ task read bgp
+ task read cdp
+ task read cef
+ task read ppp
+ task read qos
+ task read rib
+ task read diag
+ task read dwdm
+ task read hsrp
+ task read ipv4
+ task read ipv6
+ task read isis
+ task read ospf
+ task read vlan
+ task read vrrp
+ task read admin
+ task read l2vpn
+ task read bundle
+ task read static
+ task read sysmgr
+ task read system
+ task read drivers
+ task read logging
+ task read mpls-te
+ task read network
+ task read mpls-ldp
+ task read interface
+ task read inventory
+ task read multicast
+ task read sonet-sdh
+ task read ext-access
+ task read ip-services
+ task read mpls-static
+ task read route-policy
+ task read basic-services
+ task read ethernet-services
+ task write bundle
+ task write interface
+ task write inventory
+ task write basic-services
+ task write ethernet-services
+ task execute bundle
+ task execute interface
+ task execute inventory
+ task execute ext-access
+ task execute basic-services
+ task execute ethernet-services
+!
+usergroup PLDT_MONITORING
+ taskgroup PLDT_MONITORING
+!
+usergroup PLDT_PROVISIONING
+ taskgroup PLDT_PROVISIONING
+!
+usergroup PLDT_MONITORING_CONFIGURATION
+ taskgroup PLDT_MONITORING_CONFIGURATION
+!
+clock timezone PHT Asia/Manila
+banner exec ^
+**************************************************************
+*                                                            *
+*         This node is the property of PLDT/SMART.           *
+*         Changes to the hardware or software of             *
+*         this node may only be performed by                 *
+*         selected PLDT/SMART employees and/or contractors.  *
+*                                                            *
+**************************************************************
+^
+banner login X
+**************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*  This node is the property of PLDT/SMART.  Changes to the  *
+*  hardware or software of this node may only be performed   *
+*  by authorized PLDT/SMART employees and/or contractors.    *
+**************************************************************
+X
+logging ipv4 dscp cs6
+logging trap informational
+logging console disable
+logging monitor debugging
+logging buffered 2097152
+logging buffered informational
+logging facility local7
+logging 10.174.19.3 vrf CIPR20000_TNTMGMT_H00 severity info
+logging 10.123.49.34 vrf CIPR20000_TNTMGMT_H00 severity info port default
+logging 10.230.198.5 vrf CIPR20000_TNTMGMT_H00 severity info
+logging 10.230.211.3 vrf CIPR20000_TNTMGMT_H00 severity info
+logging source-interface Loopback1 vrf CIPR20000_TNTMGMT_H00
+logging hostnameprefix BCN00550CICU001
+service timestamps log datetime localtime msec show-timezone year
+service timestamps debug datetime localtime msec show-timezone year
+domain vrf CIPR20000_TNTMGMT_H00 name tnt.pldt.com.ph
+domain vrf CIPR20000_TNTMGMT_H00 list tnt.pldt.com.ph
+domain vrf CIPR20000_TNTMGMT_H00 name-server 10.30.16.108
+domain vrf CIPR20000_TNTMGMT_H00 name-server 10.30.16.109
+domain vrf CIPR20000_TNTMGMT_H00 name-server 10.3.16.104
+domain vrf CIPR20000_TNTMGMT_H00 name-server 10.31.20.105
+domain vrf CIPR20000_TNTMGMT_H00 lookup source-interface Loopback1
+tacacs source-interface Loopback1 vrf CIPR20000_TNTMGMT_H00
+tacacs-server ipv4 dscp cs6
+username admin
+ group root-lr
+ group cisco-support
+ secret 5 $1$BZr2$RDfzhKDUaf3lVzqFNqoeC1
+!
+username tsc
+ group root-lr
+ secret 5 $1$SXT3$o/tr/hCzQTq7dZY9UAlnt1
+!
+username icno
+ group root-lr
+ secret 5 $1$5cmF$XEGFh2letq4S3kfb5awyW0
+!
+aaa accounting exec ISE_TACACS start-stop group Cisco_ISE_Servers
+aaa accounting commands ISE_TACACS start-stop group Cisco_ISE_Servers
+aaa group server tacacs+ Cisco_ISE_Servers
+ vrf CIPR20000_TNTMGMT_H00
+ server-private 10.230.192.131 port 49
+  key 7 112A1016141D2B5D5679
+ !
+ server-private 10.174.0.131 port 49
+  key 7 072C285F4D0639544541
+ !
+!
+aaa authorization exec ISE_TACACS group Cisco_ISE_Servers local
+aaa authorization commands ISE_TACACS group Cisco_ISE_Servers none
+aaa authentication login ISE_TACACS group Cisco_ISE_Servers local
+aaa authentication login Auth-console local
+aaa accounting update newinfo
+cdp
+vrf IPR3007_BDO
+ address-family ipv4 unicast
+  import route-target
+   1:3007
+  !
+  export route-target
+   1:3007
+  !
+  maximum prefix 8000 80
+ !
+!
+vrf IPR5495_LBP
+ address-family ipv4 unicast
+  import route-target
+   1:5495
+  !
+  export route-target
+   1:5495
+  !
+  maximum prefix 8000 80
+ !
+!
+vrf IPR30076_IPTV
+ address-family ipv4 unicast
+  import route-target
+   1:30076
+  !
+  export route-target
+   1:30076
+  !
+  maximum prefix 40000 80
+ !
+!
+vrf IPR30044_HUANMS
+ address-family ipv4 unicast
+  import route-target
+   1:30044
+  !
+  export route-target
+   1:30044
+  !
+  maximum prefix 40000 80
+ !
+!
+vrf IPR3446_DAV-CTH
+ address-family ipv4 unicast
+  import route-target
+   1:3446
+  !
+  export route-target
+   1:3446
+  !
+  maximum prefix 8000 80
+ !
+!
+vrf CIPR20000_TNTMGMT_H00
+ address-family ipv4 unicast
+  import route-target
+   1:20000
+  !
+  export route-target
+   1:20000
+  !
+ !
+ address-family ipv6 unicast
+  import route-target
+   1:20000
+  !
+  export route-target
+   1:20000
+  !
+ !
+!
+vrf IPR30903_FTTH_VoIP_Prod
+ address-family ipv4 unicast
+  import route-target
+   1:30903
+  !
+  export route-target
+   1:30903
+  !
+  maximum prefix 40000 80
+ !
+!
+tcp path-mtu-discovery
+line console
+ login authentication Auth-console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-limit 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-limit 0
+ session-timeout 0
+!
+line template Cisco-ISE
+ accounting exec ISE_TACACS
+ authorization exec ISE_TACACS
+ login authentication ISE_TACACS
+ exec-timeout 180 0
+ session-limit 0
+ session-timeout 0
+ transport input ssh
+ ! No outbound ssh connections allowed
+ transport output none
+!
+vty-pool default 0 99 line-template Cisco-ISE
+http client vrf CIPR20000_TNTMGMT_H00
+http client source-interface ipv4 Loopback1
+arp redundancy
+!
+snmp-server ifmib ifalias long
+snmp-server ifindex persist
+snmp-server ifmib stats cache
+snmp-server engineID local 80:00:00:09:01:0a:cd:86:22
+snmp-server vrf CIPR20000_TNTMGMT_H00
+ host 10.174.19.3 traps version 3 noauth priv
+ host 10.230.211.3 traps version 3 noauth priv
+!
+snmp-server ipv4 dscp cs6
+snmp-server user snmp_admin snmpv3_def v3 auth sha encrypted 13112705091F500F6A693B603437070F priv aes 128 encrypted 09587E1E1B1643374A4117793B362125 SystemOwner
+snmp-server view view_def 1.3.6.1 included
+snmp-server view view_def 1.0.8802.1.1.2 included
+snmp-server view view_def 1.2.840.10006.300 included
+snmp-server group snmpv3_def v3 priv notify view_def read view_def write view_def
+snmp-server traps bfd
+snmp-server traps ntp
+snmp-server traps snmp linkup
+snmp-server traps snmp linkdown
+snmp-server traps snmp coldstart
+snmp-server traps snmp warmstart
+snmp-server traps snmp authentication
+snmp-server traps flash removal
+snmp-server traps flash insertion
+snmp-server traps config
+snmp-server traps entity
+snmp-server traps system
+snmp-server traps entity-state operstatus
+snmp-server traps entity-state switchover
+snmp-server traps entity-redundancy all
+snmp-server traps entity-redundancy status
+snmp-server traps entity-redundancy switchover
+snmp-server chassis-id FOX2312P5BY
+snmp-server contact PLDT BULACAN
+snmp-server location PLDT BULACAN
+snmp-server trap-source Loopback1
+dhcp ipv4
+ profile BCNHUOL001_DHCP_RELAY_IPTV relay
+  helper-address vrf IPR30076_IPTV 10.156.190.61
+  broadcast-flag policy check
+  relay information option
+  relay information option remote-id format-type hex 1149
+  relay information option allow-untrusted
+ !
+ profile BCNHUOL001_DHCP_RELAY_VOIP relay
+  helper-address vrf IPR30903_FTTH_VoIP_Prod 10.156.254.61
+  broadcast-flag policy check
+  relay information option
+  relay information option remote-id format-type hex 1150
+  relay information option allow-untrusted
+ !
+ interface BVI100011025 relay profile BCNHUOL001_DHCP_RELAY_IPTV
+ interface BVI100012024 relay profile BCNHUOL001_DHCP_RELAY_VOIP
+!
+fpd auto-reload enable
+fpd auto-upgrade enable
+ntp
+ ipv4 dscp cs6
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.1
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.2
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.34
+ server vrf CIPR20000_TNTMGMT_H00 10.205.138.35
+ access-group ipv4 serve NTP-CLIENT
+ source vrf CIPR20000_TNTMGMT_H00 Loopback1
+ update-calendar
+!
+key chain infra-isis
+ key 1
+  accept-lifetime 01:00:00 november 30 2012 infinite
+  key-string password 053B03232578715E175228530C3C3B21783D
+  send-lifetime 01:00:00 november 30 2012 infinite
+  cryptographic-algorithm HMAC-MD5
+ !
+ accept-tolerance infinite
+!
+call-home
+ vrf CIPR20000_TNTMGMT_H00
+ service active
+ contact smart-licensing
+ source-interface Loopback1
+ profile tnt-sat
+  active
+  destination address http https://mktg3610civv046.tnt.pldt.com.ph/Transportgateway/services/DeviceRequestHandler
+  reporting smart-call-home-data
+  reporting smart-licensing-data
+ !
+!
+control-plane
+ management-plane
+  inband
+   interface all
+    allow SSH peer
+     address ipv4 10.174.0.204
+     address ipv4 10.174.6.11
+     address ipv4 10.174.17.3
+     address ipv4 10.174.18.2
+     address ipv4 10.174.19.3
+     address ipv4 10.230.192.204
+     address ipv4 10.230.192.211
+     address ipv4 10.230.192.217
+     address ipv4 10.230.198.5
+     address ipv4 10.230.198.11
+     address ipv4 10.230.209.4
+     address ipv4 10.230.210.2
+     address ipv4 10.230.211.3
+    !
+    allow SNMP peer
+     address ipv4 10.174.0.204
+     address ipv4 10.174.18.2
+     address ipv4 10.174.19.3
+     address ipv4 10.230.192.204
+     address ipv4 10.230.192.211
+     address ipv4 10.230.192.217
+     address ipv4 10.230.198.5
+     address ipv4 10.230.210.2
+     address ipv4 10.230.211.3
+    !
+   !
+  !
+ !
+!
+hw-module profile qos hqos-enable
+hw-module profile qos max-classmap-size 8
+hw-module profile bundle-scale 1024
+netconf-yang agent
+ ssh
+!
+ethernet-services access-list ACL_NPQHUBS001
+ 10 deny host 1020.5130.1211 any
+ 20 deny host ac85.3d95.3c67 any
+ 30 permit any any
+!
+ethernet-services access-list ACL_NPQHUBS002
+ 10 deny host 1025.4120.4206 any
+ 20 deny host c81f.be6d.0dea any
+ 100 permit any any
+!
+ethernet-services access-list ACL_SPCCIBS001
+ 10 deny host e0ac.f14b.1f10 any
+ 20 deny host e0ac.f14b.1f11 any
+ 30 permit any any
+!
+ethernet-services access-list ACL_SPCHUBS003
+ 30 permit any any
+!
+ipv4 access-list ssh_acl
+ 10 permit ipv4 host 10.230.209.4 any
+ 20 permit ipv4 host 10.174.17.3 any
+ 30 permit ipv4 host 10.230.210.2 any
+ 40 permit ipv4 host 10.174.18.2 any
+ 50 permit ipv4 host 10.174.19.3 any
+ 60 permit ipv4 host 10.230.211.3 any
+ 70 permit ipv4 host 10.230.192.204 any
+ 80 permit ipv4 host 10.174.0.204 any
+ 90 permit ipv4 host 10.230.192.211 any
+ 110 permit ipv4 host 10.230.198.5 any
+ 120 permit ipv4 host 10.230.192.217 any
+ 130 permit ipv4 host 10.230.198.11 any
+ 140 permit ipv4 host 10.174.6.11 any
+!
+ipv4 access-list iptv-acl
+ !ipv4 access-list iptv-acl
+ 10 permit ipv4 any host 224.0.23.14
+ 20 permit ipv4 any 239.0.0.0 0.255.255.255
+!
+ipv4 access-list NTP-CLIENT
+ !permit all
+ 10 permit ipv4 any any
+!
+ipv4 access-list iptv-mgroup-acl
+ 10 permit ipv4 239.0.0.0 0.0.255.255 any
+ 20 permit ipv4 host 224.0.23.14 any
+!
+class-map match-any Egress-TNT-PTP-NC
+ match traffic-class 7 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-PTP-NC
+ match mpls experimental topmost 6 7 
+ match dscp cs6 cs7 
+ end-class-map
+! 
+class-map match-any Egress-TNT-Real-Time
+ match traffic-class 5 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP1-Class
+ match traffic-class 1 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP2-Class
+ match traffic-class 2 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP3-Class
+ match traffic-class 3 
+ end-class-map
+! 
+class-map match-any Egress-TNT-EXP4-Class
+ match traffic-class 4 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-Real-Time
+ match mpls experimental topmost 5 
+ match dscp ef cs5 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP1-Class
+ match mpls experimental topmost 1 
+ match dscp af11 af12 af13 cs1 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP2-Class
+ match mpls experimental topmost 2 
+ match dscp af21 af22 af23 cs2 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP3-Class
+ match mpls experimental topmost 3 
+ match dscp af31 af32 af33 cs3 
+ end-class-map
+! 
+class-map match-any Ingress-TNT-EXP4-Class
+ match mpls experimental topmost 4 
+ match dscp af41 af42 af43 cs4 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_EF
+ match dscp ef 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF1
+ match dscp af11 af12 af13 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF2
+ match dscp af21 af22 af23 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF3
+ match dscp af31 af32 af33 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_AF4
+ match dscp af41 af42 af43 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS1
+ match cos 1 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS2
+ match cos 2 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS3
+ match cos 3 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS4
+ match cos 4 
+ end-class-map
+! 
+class-map match-any Ingress-PE_CE-Traffic_COS5
+ match cos 5 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class1
+ match traffic-class 1 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class2
+ match traffic-class 2 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class3
+ match traffic-class 3 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class4
+ match traffic-class 4 
+ end-class-map
+! 
+class-map match-any Egress-PE_CE-Traffic_Class5
+ match traffic-class 5 
+ end-class-map
+! 
+policy-map TNT-CORE_EGRESS-v1
+ class Egress-TNT-PTP-NC
+  queue-limit 5 ms 
+  priority level 1 
+ ! 
+ class Egress-TNT-Real-Time
+  queue-limit 5 ms 
+  priority level 2 
+ ! 
+ class Egress-TNT-EXP4-Class
+  bandwidth remaining percent 30 
+  queue-limit 100 ms 
+ ! 
+ class Egress-TNT-EXP3-Class
+  bandwidth remaining percent 25 
+  queue-limit 100 ms 
+ ! 
+ class Egress-TNT-EXP2-Class
+  bandwidth remaining percent 25 
+  queue-limit 100 ms 
+ ! 
+ class Egress-TNT-EXP1-Class
+  bandwidth remaining percent 15 
+  queue-limit 100 ms 
+ ! 
+ class class-default
+  random-detect 50 ms 100 ms 
+  bandwidth remaining percent 5 
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-DEFAULT-IN
+ class class-default
+  set mpls experimental imposition 0
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-CP-IN
+ class class-default
+  set mpls experimental imposition 5
+  set traffic-class 5
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-OM-IN
+ class class-default
+  set mpls experimental imposition 3
+  set traffic-class 3
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-N4I-DEFAULT-IN
+ class class-default
+  set mpls experimental imposition 0
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map TNT-CORE_INGRESS-v1
+ class Ingress-TNT-PTP-NC
+  set traffic-class 7
+ ! 
+ class Ingress-TNT-Real-Time
+  set traffic-class 5
+ ! 
+ class Ingress-TNT-EXP4-Class
+  set traffic-class 4
+ ! 
+ class Ingress-TNT-EXP3-Class
+  set traffic-class 3
+ ! 
+ class Ingress-TNT-EXP2-Class
+  set traffic-class 2
+ ! 
+ class Ingress-TNT-EXP1-Class
+  set traffic-class 1
+ ! 
+ class class-default
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-CP-OUT
+ class Egress-PE_CE-Traffic_Class5
+  priority level 2 
+ ! 
+ class class-default
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-HSI-IN
+ class class-default
+  set mpls experimental imposition 0
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-IPTV-IN
+ class class-default
+  set mpls experimental imposition 4
+  set traffic-class 4
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-VOICE-IN
+ class Ingress-PE_CE-Traffic_EF
+  set mpls experimental imposition 5
+  set traffic-class 5
+ ! 
+ class class-default
+  set mpls experimental imposition 0
+  set traffic-class 0
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-77K-AF3-UNI-IN
+ class class-default
+  police rate 77 kbps burst 14399 bytes 
+  ! 
+  set mpls experimental imposition 3
+  set traffic-class 3
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-NSOTEST-UNI-IN
+ class class-default
+  police rate 10000 kbps burst 1000 bytes 
+  ! 
+  set traffic-class 5
+  set mpls experimental imposition 5
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-FIXED-CB-VOICE-OUT
+ class Egress-PE_CE-Traffic_Class5
+  priority level 2 
+ ! 
+ class class-default
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-308K-AF3-UNI-IN
+ class class-default
+  police rate 308 kbps burst 57596 bytes 
+  ! 
+  set mpls experimental imposition 3
+  set traffic-class 3
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-77K-AF3-UNI-OUT
+ class class-default
+  shape average 77 kbps 
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-NSOTEST-UNI-OUT
+ class class-default
+  police rate 10000 kbps burst 1500 bytes 
+  ! 
+  priority level 2 
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-308K-AF3-UNI-OUT
+ class class-default
+  shape average 308 kbps 
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-7200K-AF3-UNI-IN
+ class class-default
+  police rate 7200 kbps burst 1346400 bytes 
+  ! 
+  set traffic-class 3
+  set mpls experimental imposition 3
+ ! 
+ end-policy-map
+! 
+policy-map PLDT-ENT-7200K-AF3-UNI-OUT
+ class class-default
+  shape average 7200 kbps 
+ ! 
+ end-policy-map
+! 
+interface Bundle-Ether251
+ description **Connected to MLLN3874CIBE001 Bundle-Ether251**
+ bfd mode ietf
+ bfd address-family ipv4 timers start 60
+ bfd address-family ipv4 timers nbr-unconfig 3600
+ bfd address-family ipv4 multiplier 3
+ bfd address-family ipv4 destination 10.205.230.194
+ bfd address-family ipv4 fast-detect
+ bfd address-family ipv4 minimum-interval 15
+ mtu 9216
+ service-policy input TNT-CORE_INGRESS-v1
+ service-policy output TNT-CORE_EGRESS-v1
+ ipv4 address 10.205.230.193 255.255.255.252
+ ipv6 address 2405:b800:1:2000::360/127
+ load-interval 30
+ dampening
+!
+interface Bundle-Ether252
+ description **Connected to MLLN3874CIBE002 Bundle-Ether251**
+ bfd mode ietf
+ bfd address-family ipv4 timers start 60
+ bfd address-family ipv4 timers nbr-unconfig 3600
+ bfd address-family ipv4 multiplier 3
+ bfd address-family ipv4 destination 10.205.230.198
+ bfd address-family ipv4 fast-detect
+ bfd address-family ipv4 minimum-interval 15
+ mtu 9216
+ service-policy input TNT-CORE_INGRESS-v1
+ service-policy output TNT-CORE_EGRESS-v1
+ ipv4 address 10.205.230.197 255.255.255.252
+ ipv6 address 2405:b800:1:2000::362/127
+ load-interval 30
+ dampening
+!
+interface Bundle-Ether10001
+ description BCNHUOL001
+ mtu 9014
+ shutdown
+ load-interval 30
+ dampening
+!
+interface Bundle-Ether10001.1025 l2transport
+ description BCNHUOL001 IPTV DHCP
+ encapsulation dot1q 1025
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-IPTV-IN
+!
+interface Bundle-Ether10001.1026
+ description IPR30076_IPTV_BCNHUOL001 IPTV Multicast
+ service-policy input PLDT-FIXED-CB-IPTV-IN
+ vrf IPR30076_IPTV
+ ipv4 address 172.16.99.13 255.255.255.252
+ arp learning local
+ load-interval 30
+ encapsulation dot1q 1026
+ logging events link-status
+!
+interface Bundle-Ether10001.1039 l2transport
+ description BCNHUOL001 FTTH DHCP Public IP
+ encapsulation dot1q 1039
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-HSI-IN
+ ethernet-services access-group ACL_SPCHUBS003 ingress
+!
+interface Bundle-Ether10001.1101 l2transport
+ description SMART COMMUNICATIONS INC._PID1-15PRXWH_I-GATE BOD_100M
+ encapsulation dot1q 1101
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-N4I-DEFAULT-IN
+!
+interface Bundle-Ether10001.1103 l2transport
+ description VIENOVO PHILIPPINES INC._PID1-17PYSJ1_I-GATE_10M
+ encapsulation dot1q 1103
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-N4I-DEFAULT-IN
+!
+interface Bundle-Ether10001.1104
+ description IPR3007_BDO_BDO UNIBANK, INC._PID1-17KAPAA_BRAINS IPVPN-LL_64K
+ service-policy input PLDT-ENT-77K-AF3-UNI-IN
+ service-policy output PLDT-ENT-77K-AF3-UNI-OUT
+ vrf IPR3007_BDO
+ ipv4 address 10.229.143.37 255.255.255.252
+ arp learning local
+ load-interval 30
+ encapsulation dot1q 1104
+ logging events link-status
+!
+interface Bundle-Ether10001.1105 l2transport
+ description SMART COMMUNICATIONS INC._PID1-19IY3MV_I-GATE BOD_200M
+ encapsulation dot1q 1105
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-N4I-DEFAULT-IN
+!
+interface Bundle-Ether10001.1106
+ description IPR5495_LBP_LAND BANK OF THE PHILIPPINES_PID1-1A855MX_IPVPN_256K
+ service-policy input PLDT-ENT-308K-AF3-UNI-IN
+ service-policy output PLDT-ENT-308K-AF3-UNI-OUT
+ vrf IPR5495_LBP
+ ipv4 address 10.200.2.134 255.255.255.252
+ arp learning local
+ load-interval 30
+ encapsulation dot1q 1106
+ logging events link-status
+!
+interface Bundle-Ether10001.2001
+ description IPR30044_HUANMS_BCNHUOL001 FTTH NMS
+ service-policy input PLDT-FIXED-CB-OM-IN
+ vrf IPR30044_HUANMS
+ ipv4 address 10.226.2.193 255.255.255.192
+ arp learning local
+ load-interval 30
+ encapsulation dot1q 2001
+ logging events link-status
+!
+interface Bundle-Ether10001.2024 l2transport
+ description BCNHUOL001 FTTH RTP
+ encapsulation dot1q 2024
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-VOICE-IN
+!
+interface Bundle-Ether10001.2030 l2transport
+ description BCNHUOL001 FTTH DHCP
+ encapsulation dot1q 2030
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-HSI-IN
+ ethernet-services access-group ACL_SPCHUBS003 ingress
+!
+interface Bundle-Ether10001.2035 l2transport
+ description BCNHUOL001 Prepaid FTTH DHCP
+ encapsulation dot1q 2035
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-HSI-IN
+ ethernet-services access-group ACL_NPQHUBS002 ingress
+!
+interface Bundle-Ether10001.2050 l2transport
+ description BCNHUOL001 FTTH PPPoE
+ encapsulation dot1q 2050
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-HSI-IN
+ ethernet-services access-group ACL_SPCCIBS001 ingress
+!
+interface Bundle-Ether10001.2059 l2transport
+ description BCNHUOL001 FTTH DHCP Volume Based
+ encapsulation dot1q 2059
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-FIXED-CB-HSI-IN
+ ethernet-services access-group ACL_NPQHUBS001 ingress
+!
+interface Bundle-Ether10001.2100 l2transport
+ description DEPARTMENT OF INFORMATION AND COMMUNICATIONS TECHNOLOGY-BULACAN_PID1-1AG3HTQ_I-GATE LITE_10M
+ encapsulation dot1q 2100
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-N4I-DEFAULT-IN
+!
+interface Bundle-Ether10001.2101 l2transport
+ description BULACAN STATE UNIVERSITY_PID1-1B3QNZH_I-GATE PREMIUM_50M
+ encapsulation dot1q 2101
+ rewrite ingress tag pop 1 symmetric
+ service-policy input PLDT-N4I-DEFAULT-IN
+!
+interface Bundle-Ether10001.2102
+ description DAVAO CITIHARDWARE INCORPORATED_PID1-1CNCZVZ_SHOPS.WORK_6M
+ service-policy input PLDT-ENT-7200K-AF3-UNI-IN
+ service-policy output PLDT-ENT-7200K-AF3-UNI-OUT
+ vrf IPR3446_DAV-CTH
+ ipv4 address 10.229.202.85 255.255.255.252
+ arp learning local
+ load-interval 30
+ encapsulation dot1q 2102
+ logging events link-status
+!
+interface Bundle-Ether65534
+ shutdown
+!
+interface Loopback0
+ description default loopback
+ ipv4 address 10.205.134.34 255.255.255.255
+ ipv6 address 2405:b800::3022/128
+!
+interface Loopback1
+ description network management loopback
+ vrf CIPR20000_TNTMGMT_H00
+ ipv4 address 10.205.142.34 255.255.255.255
+ ipv6 address 2405:b800::b022/128
+!
+interface MgmtEth0/RP0/CPU0/0
+ shutdown
+!
+interface MgmtEth0/RP1/CPU0/0
+ shutdown
+!
+interface TenGigE0/0/0/0
+ shutdown
+!
+interface TenGigE0/0/0/1
+ shutdown
+!
+interface TenGigE0/0/0/2
+ shutdown
+!
+interface TenGigE0/0/0/3
+ shutdown
+!
+interface TenGigE0/0/0/4
+ shutdown
+!
+interface TenGigE0/0/0/5
+ shutdown
+!
+interface TenGigE0/0/0/6
+ shutdown
+!
+interface TenGigE0/0/0/7
+ shutdown
+!
+interface TenGigE0/0/0/8
+ shutdown
+!
+interface TenGigE0/0/0/9
+ shutdown
+!
+interface TenGigE0/0/0/10
+ shutdown
+!
+interface TenGigE0/0/0/11
+ shutdown
+!
+interface TenGigE0/0/1/0
+ description BCNHUOL001_10GE0/9/0
+ bundle id 10001 mode active
+ carrier-delay up 2000 down 0
+ shutdown
+!
+interface TenGigE0/0/1/1
+ shutdown
+!
+interface TenGigE0/0/1/2
+ shutdown
+!
+interface TenGigE0/0/1/3
+ shutdown
+!
+interface TenGigE0/0/1/4
+ shutdown
+!
+interface TenGigE0/0/1/5
+ shutdown
+!
+interface TenGigE0/0/1/6
+ shutdown
+!
+interface TenGigE0/0/1/7
+ shutdown
+!
+interface TenGigE0/0/1/8
+ shutdown
+!
+interface TenGigE0/0/1/9
+ shutdown
+!
+interface TenGigE0/0/1/10
+ shutdown
+!
+interface TenGigE0/0/1/11
+ shutdown
+!
+interface TenGigE0/1/0/0
+ shutdown
+!
+interface TenGigE0/1/0/1
+ shutdown
+!
+interface TenGigE0/1/0/2
+ shutdown
+!
+interface TenGigE0/1/0/3
+ shutdown
+!
+interface TenGigE0/1/0/4
+ shutdown
+!
+interface TenGigE0/1/0/5
+ shutdown
+!
+interface TenGigE0/1/0/6
+ shutdown
+!
+interface TenGigE0/1/0/7
+ shutdown
+!
+interface TenGigE0/1/0/8
+ shutdown
+!
+interface TenGigE0/1/0/9
+ shutdown
+!
+interface TenGigE0/1/0/10
+ shutdown
+!
+interface TenGigE0/1/0/11
+ shutdown
+!
+interface TenGigE0/1/1/0
+ description BCNHUOL001_10GE0/10/0
+ bundle id 10001 mode active
+ carrier-delay up 2000 down 0
+ shutdown
+!
+interface TenGigE0/1/1/1
+ shutdown
+!
+interface TenGigE0/1/1/2
+ shutdown
+!
+interface TenGigE0/1/1/3
+ shutdown
+!
+interface TenGigE0/1/1/4
+ shutdown
+!
+interface TenGigE0/1/1/5
+ shutdown
+!
+interface TenGigE0/1/1/6
+ shutdown
+!
+interface TenGigE0/1/1/7
+ shutdown
+!
+interface TenGigE0/1/1/8
+ shutdown
+!
+interface TenGigE0/1/1/9
+ shutdown
+!
+interface TenGigE0/1/1/10
+ shutdown
+!
+interface TenGigE0/1/1/11
+ shutdown
+!
+interface BVI100011025
+ description BCNHUOL001 IPTV DHCP
+ vrf IPR30076_IPTV
+ ipv4 address 100.19.128.1 255.255.192.0
+ arp learning local
+ load-interval 30
+ logging events link-status
+!
+interface BVI100012024
+ description BCNHUOL001 FTTH RTP
+ vrf IPR30903_FTTH_VoIP_Prod
+ ipv4 address 101.19.128.1 255.255.192.0
+ arp learning local
+ load-interval 30
+ logging events link-status
+!
+interface FortyGigE0/0/0/12
+ shutdown
+!
+interface FortyGigE0/0/0/13
+ shutdown
+!
+interface HundredGigE0/0/2/0
+ description FC_MLLN3874CIBE001 Hu0/0/0/12: BNBCNI405MLL 001-072 F35/36>>BCNI405MLL 001-072 35,36>>PTE-DFON-TC#7 F53/54>>MALOLOS-BULAKAN ODF F35/36
+ bundle id 251 mode active
+ cdp
+ carrier-delay up 2000 down 0
+ load-interval 30
+ dampening
+!
+interface HundredGigE0/0/2/1
+ shutdown
+!
+interface HundredGigE0/0/2/2
+ shutdown
+!
+interface HundredGigE0/0/2/3
+ shutdown
+!
+interface FortyGigE0/1/0/12
+ shutdown
+!
+interface FortyGigE0/1/0/13
+ shutdown
+!
+interface HundredGigE0/1/2/0
+ description FC_MLLN3874CIBE002 Hu0/0/0/12: BCN1404GGT F71/72>>BCN1404GGT 71,72>>GGTI371MLL F5,F6>>PTE-DFON-TC#7 F23,24>>MLLGEFD023 - ODF F5/6
+ bundle id 252 mode active
+ cdp
+ carrier-delay up 2000 down 0
+ load-interval 30
+ dampening
+!
+interface HundredGigE0/1/2/1
+ shutdown
+!
+interface HundredGigE0/1/2/2
+ shutdown
+!
+interface HundredGigE0/1/2/3
+ shutdown
+!
+interface PTP0/RP0/CPU0/0
+ shutdown
+!
+interface PTP0/RP1/CPU0/0
+ shutdown
+!
+!
+route-policy pass-all
+  pass
+end-policy
+!
+route-policy LOOPBACK-INTO-BGP-LU($SID)
+  set label-index $SID
+  set aigp-metric igp-cost
+end-policy
+!
+route-policy RP_BGP_IPv4_PIC_EDGE
+  set path-selection backup 1 install multipath-protect advertise
+end-policy
+!
+route-policy RP_BGP_VPNv4v6_PIC_EDGE
+  set path-selection backup 1 install
+end-policy
+!
+route-policy mvpn-mldp-inband-policy-v4
+  set core-tree mldp-inband
+end-policy
+!
+router static
+ vrf IPR3007_BDO
+  address-family ipv4 unicast
+   10.105.17.176/29 Bundle-Ether10001.1104 10.229.143.38
+  !
+ !
+ vrf IPR3446_DAV-CTH
+  address-family ipv4 unicast
+   192.168.57.0/24 Bundle-Ether10001.2102 10.229.202.86
+  !
+ !
+!
+router isis AGG1304
+ set-overload-bit on-startup 600
+ is-type level-2-only
+ net 49.1304.0102.0513.4034.00
+ instance-id 1304
+ nsr
+ distribute link-state instance-id 1304 level 2
+ nsf cisco
+ log adjacency changes
+ lsp-gen-interval maximum-wait 5000 initial-wait 1 secondary-wait 50
+ lsp-refresh-interval 65000
+ max-lsp-lifetime 65535
+ lsp-password keychain infra-isis level 2
+ address-family ipv4 unicast
+  metric-style wide
+  fast-reroute per-prefix priority-limit medium
+  microloop avoidance segment-routing
+  microloop avoidance rib-update-delay 3000
+  mpls traffic-eng level-2-only
+  mpls traffic-eng router-id 10.205.134.34
+  mpls traffic-eng multicast-intact
+  spf-interval maximum-wait 5000 initial-wait 50 secondary-wait 200
+  attached-bit send never-set
+  segment-routing mpls sr-prefer
+ !
+ address-family ipv6 unicast
+  metric-style wide
+  spf-interval maximum-wait 5000 initial-wait 50 secondary-wait 200
+ !
+ interface Bundle-Ether251
+  circuit-type level-2-only
+  point-to-point
+  hello-password keychain infra-isis
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+  address-family ipv6 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+ !
+ interface Bundle-Ether252
+  circuit-type level-2-only
+  point-to-point
+  hello-password keychain infra-isis
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+  address-family ipv6 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 1000 level 2
+  !
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+   tag 1000
+   prefix-sid absolute 33010 explicit-null
+   prefix-sid strict-spf absolute 33011 explicit-null
+  !
+  address-family ipv6 unicast
+   tag 1000
+  !
+ !
+!
+snmp-server traps isis all
+router ospf PE-CE-TNT
+!
+snmp-server traps bgp cbgp2
+snmp-server traps bgp
+router bgp 45608
+ nsr
+ mvpn
+ bgp router-id 10.205.134.34
+ bgp graceful-restart graceful-reset
+ update out logging
+ bgp graceful-restart
+ bgp log neighbor changes detail
+ ibgp policy out enforce-modifications
+ address-family vpnv4 unicast
+  additional-paths selection route-policy RP_BGP_VPNv4v6_PIC_EDGE
+  nexthop trigger-delay critical 1000
+ !
+ address-family vpnv6 unicast
+  additional-paths selection route-policy RP_BGP_VPNv4v6_PIC_EDGE
+  nexthop trigger-delay critical 1000
+ !
+ address-family l2vpn evpn
+  nexthop trigger-delay critical 0
+ !
+ neighbor-group S-RR
+  remote-as 45608
+  password encrypted 107E5A3501232D5C0253157D23180C3E7152
+  description S-RR peer  
+  update-source Loopback0
+  address-family vpnv4 unicast
+  !
+  address-family vpnv6 unicast
+  !
+  address-family l2vpn evpn
+  !
+ !
+ neighbor 10.205.130.21
+  use neighbor-group S-RR
+ !
+ neighbor 10.205.130.98
+  use neighbor-group S-RR
+ !
+ vrf IPR3007_BDO
+  rd 10.205.134.34:3007
+  address-family ipv4 unicast
+   label mode per-ce
+   maximum-paths ibgp 2
+   additional-paths selection disable
+   redistribute connected
+   redistribute static
+  !
+ !
+ vrf IPR5495_LBP
+  rd 10.205.134.34:5495
+  address-family ipv4 unicast
+   label mode per-ce
+   additional-paths selection disable
+   redistribute connected
+  !
+ !
+ vrf IPR30076_IPTV
+  rd 10.205.134.34:30076
+  address-family ipv4 unicast
+   label mode per-vrf
+   additional-paths selection disable
+   redistribute connected
+  !
+ !
+ vrf IPR30044_HUANMS
+  rd 10.205.134.34:30044
+  address-family ipv4 unicast
+   label mode per-ce
+   additional-paths selection disable
+   redistribute connected
+  !
+ !
+ vrf IPR3446_DAV-CTH
+  rd 10.205.134.34:3446
+  address-family ipv4 unicast
+   label mode per-ce
+   maximum-paths ibgp 2
+   additional-paths selection disable
+   redistribute connected
+   redistribute static
+  !
+ !
+ vrf CIPR20000_TNTMGMT_H00
+  rd 10.205.134.34:20000
+  address-family ipv4 unicast
+   label mode per-ce
+   redistribute connected
+  !
+  address-family ipv6 unicast
+   label mode per-ce
+   redistribute connected
+  !
+ !
+ vrf IPR30903_FTTH_VoIP_Prod
+  rd 10.205.134.34:30903
+  address-family ipv4 unicast
+   label mode per-vrf
+   additional-paths selection disable
+   redistribute connected
+  !
+ !
+!
+evpn
+ ethernet-segment
+  type 1 auto-generation-disable
+ !
+ evi 11171
+  advertise-mac
+  !
+ !
+ evi 11172
+  advertise-mac
+  !
+ !
+ evi 11173
+  advertise-mac
+  !
+ !
+ evi 11174
+  advertise-mac
+  !
+ !
+ evi 11175
+  advertise-mac
+  !
+ !
+ group 1
+  core interface Bundle-Ether251
+  core interface Bundle-Ether252
+ !
+ logging
+  df-election
+ !
+!
+snmp-server traps vrrp events
+snmp-server traps vpls all
+snmp-server traps l2vpn all
+l2vpn
+ load-balancing flow src-dst-ip
+ logging
+  bridge-domain
+  pseudowire
+  nsr
+  vfi
+ !
+ xconnect group XCPID1-15PRXWH_IGATE
+  p2p CIPB11161-SC08
+   interface Bundle-Ether10001.1101
+   neighbor evpn evi 11161 target 11161 source 11161
+   !
+  !
+ !
+ xconnect group XCPID1-17PYSJ1_IGATE
+  p2p CIPB11162-VPI568
+   interface Bundle-Ether10001.1103
+   neighbor evpn evi 11162 target 11162 source 11162
+   !
+  !
+ !
+ xconnect group XCPID1-19IY3MV_IGATE
+  p2p CIPB11163-SC08
+   interface Bundle-Ether10001.1105
+   neighbor evpn evi 11163 target 11163 source 11163
+   !
+  !
+ !
+ xconnect group XCPID1-1AG3HTQ_IGATE
+  p2p CIPB11164-DICT24
+   interface Bundle-Ether10001.2100
+   neighbor evpn evi 11164 target 11164 source 11164
+   !
+  !
+ !
+ xconnect group XCPID1-1B3QNZH_IGATE
+  p2p CIPB11165-BSU04
+   interface Bundle-Ether10001.2101
+   neighbor evpn evi 11165 target 11165 source 11165
+   !
+  !
+ !
+ bridge group BCN00550CICU001_OLT_FNAT
+  bridge-domain BCN00550CICU001_OLT_FNAT
+   interface Bundle-Ether10001.1039
+    split-horizon group
+   !
+   evi 11171
+   !
+  !
+ !
+ bridge group BCN00550CICU001_OLT_VOLM
+  bridge-domain BCN00550CICU001_OLT_VOLM
+   interface Bundle-Ether10001.2059
+    split-horizon group
+   !
+   evi 11175
+   !
+  !
+ !
+ bridge group BCN00550CICU001_OLT_PFCONS
+  bridge-domain BCN00550CICU001_OLT_PFCONS
+   interface Bundle-Ether10001.2035
+    split-horizon group
+   !
+   evi 11173
+   !
+  !
+ !
+ bridge group BG_BCNHUOL001_IPR30076_IPTV
+  bridge-domain BD_BCNHUOL001_IPR30076_IPTV
+   interface Bundle-Ether10001.1025
+   !
+   routed interface BVI100011025
+   !
+  !
+ !
+ bridge group BG_BCNHUOL001_IPR30903_Voip
+  bridge-domain BD_BCNHUOL001_IPR30903_Voip
+   interface Bundle-Ether10001.2024
+   !
+   routed interface BVI100012024
+   !
+  !
+ !
+ bridge group BCN00550CICU001_BCNHUOL001_CONS
+  bridge-domain BCNHUOL001_CONS
+   interface Bundle-Ether10001.2030
+   !
+   evi 11172
+   !
+  !
+ !
+ bridge group BCN00550CICU001_BCNHUOL001_CORP
+  bridge-domain BCNHUOL001_CORP
+   interface Bundle-Ether10001.2050
+
+show clock
+=========================
+   !
+   evi 11174
+   !
+  !
+ !
+!
+router vrrp
+!
+snmp-server traps mpls ldp up
+snmp-server traps mpls ldp down
+snmp-server traps mpls ldp threshold
+snmp-server traps mpls l3vpn all
+snmp-server traps mpls l3vpn vrf-up
+snmp-server traps mpls l3vpn vrf-down
+snmp-server traps mpls l3vpn max-threshold-cleared
+snmp-server traps mpls l3vpn max-threshold-exceeded
+snmp-server traps mpls l3vpn mid-threshold-exceeded
+snmp-server traps mpls l3vpn max-threshold-reissue-notif-time 1
+mpls ldp
+ capabilities sac mldp-only
+ mldp
+  address-family ipv4
+   make-before-break delay 30
+  !
+ !
+ router-id 10.205.134.34
+ interface Bundle-Ether251
+ !
+ interface Bundle-Ether252
+ !
+!
+snmp-server traps pim invalid-message-received
+snmp-server traps pim interface-state-change
+multicast-routing
+ address-family ipv4
+  interface Loopback0
+   enable
+  !
+  mdt source Loopback0
+ !
+!
+router igmp
+ vrf IPR30076_IPTV
+  interface Bundle-Ether10001.1026
+   static-group 224.0.23.14 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.1.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.2.10 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.3.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.10 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.11 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.12 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.4.13 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.10 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.11 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.12 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.13 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.14 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.15 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.16 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.17 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.18 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.19 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.20 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.21 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.22 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.23 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.24 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.25 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.26 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.27 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.28 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.29 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.30 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.31 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.32 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.33 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.34 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.35 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.36 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.37 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.40 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.41 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.42 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.43 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.44 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.45 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.46 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.47 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.48 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.49 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.50 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.51 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.52 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.53 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.60 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.62 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.64 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.65 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.69 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.70 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.5.77 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.6.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.6.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.6.15 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.10 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.11 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.12 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.13 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.14 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.15 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.17 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.18 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.19 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.20 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.21 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.22 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.23 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.24 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.26 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.28 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.8.29 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.7 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.10 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.11 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.12 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.13 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.14 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.10.16 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.15.25 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.15.27 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.15.28 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.15.52 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.1 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.2 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.3 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.4 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.5 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.6 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.8 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.9 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.10 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.11 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.12 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.13 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.14 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.15 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.18 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.19 inc-mask 0.0.0.0 count 1 192.168.221.1
+   static-group 239.0.16.20 inc-mask 0.0.0.0 count 1 192.168.221.1
+  !
+  ssm map static 192.168.221.1 iptv-mgroup-acl
+ !
+!
+segment-routing
+ global-block 16000 225999
+ traffic-eng
+  logging
+   policy status
+  !
+  pcc
+   source-address ipv4 10.205.134.34
+   pce address ipv4 10.205.130.19
+    precedence 5
+   !
+   pce address ipv4 10.205.130.96
+    precedence 10
+   !
+   report-all
+  !
+ !
+!
+xml agent tty
+!
+snmp-server traps sensor
+snmp-server traps fru-ctrl
+netconf agent tty
+!
+router pim
+ vrf IPR30076_IPTV
+  address-family ipv4
+   rpf topology route-policy mvpn-mldp-inband-policy-v4
+   interface Bundle-Ether10001.1026
+    enable
+   !
+  !
+ !
+!
+mpls ip-ttl-propagate disable forwarded
+crypto ca trustpoint Trustpool
+ crl optional
+!
+ssh client dscp 48
+ssh server dscp 48
+ssh server logging
+ssh timeout 90
+ssh server rate-limit 600
+ssh server session-limit 100
+ssh server v2
+ssh server vrf default
+ssh server vrf CIPR20000_TNTMGMT_H00 ipv4 access-list ssh_acl
+license smart flexible-consumption enable
+telnet vrf default ipv4 server max-servers 100
+end
+
+RP/0/RP0/CPU0:BCN00550CICU001#show clock
+
+Mon May  3 11:02:52.197 PHT
+

@@ -7,3 +7,5 @@ show run segment-routing traffic-eng pcc
 show segment-routing traffic-eng pcc ipv4 peer detail
 show platform
 show hw-module fpd
+show redundancy
+show install request

@@ -26,7 +26,7 @@ def main():
     output2 =output.decode('utf-8')
     if "show_run" in activity:
         print(output2)
-    with open('/home/users/jraluta/tnt_script/UPGRADE/Data/'+current_time+f'diff_raw_{file1}_{file2}', 'a+') as parse_results:
+    with open('/home/users/jraluta/tnt_script/UPGRADE/Data/'+current_time+f'_diff_raw_{file1}_{file2}', 'a+') as parse_results:
         for line in output2:
         #   if 'show' in line:
            parse_results.writelines(line)
